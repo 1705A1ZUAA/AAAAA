@@ -10,6 +10,12 @@ import com.wd.health.bean.JianKangBean;
 import com.wd.health.bean.KeListBean;
 import com.wd.health.bean.LoginBean;
 import com.wd.health.bean.SymptomBean;
+import com.wd.health.shipin.bean.ChaXunShiPin_ResutBean;
+import com.wd.health.shipin.bean.CollectBean;
+import com.wd.health.shipin.bean.Commentbean;
+import com.wd.health.shipin.bean.VideoCommentList;
+import com.wd.health.shipin.bean.Video_TablayoutResultBean;
+import com.wd.health.shipin.bean.Videobuybean;
 
 import java.util.Map;
 
@@ -17,8 +23,11 @@ import io.reactivex.Observable;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface IApi {
     @FormUrlEncoded
@@ -53,4 +62,36 @@ public interface IApi {
     //健康讲堂类目
     @GET("user/video/v1/findVideoCategoryList")
     Observable<JianKangBean> getJianKang();
+    //视频
+    @GET("user/video/v1/findVideoCategoryList")
+    Observable<Video_TablayoutResultBean> tablyList();
+
+    @GET("user/video/v1/findVideoVoList")
+    @Headers({"userId:91145","sessionId:1581151729091145"})
+    Observable<ChaXunShiPin_ResutBean> chaXun_Vidio(@QueryMap Map<String,Object> map);
+
+    @POST("userideoerify1/addUserVideoCollection")
+    @Headers({"userId:58145","sessionId:1582427298358145"})
+    Observable<CollectBean> colleCtion(@Header("userId")  Integer userid , @Header("sessionId") String sessionid, @QueryMap Map<String,Object> map);
+    //视频弹幕
+    @POST("userideoerify1/addVideoComment")
+    @Headers({"userId:58145","sessionId:1582427298358145"})
+    Observable<Commentbean> comment(@QueryMap Map<String,Object> map);
+    //视频的购买
+    @POST("userideoerify1ideoBuy")
+    @Headers({"userId:58145","sessionId:1582427298358145"})
+    Observable<Videobuybean> buy(@QueryMap Map<String,Object> map);
+    //查询视频的评论
+    @GET("userideo1/findVideoCommentList")
+    Observable<VideoCommentList> commentList(@Query("videoId") Integer id);
+
+//
+//    @POST("user1ndOutEmailCode")
+//    Observable<YanZhengMaBean> yanZhengMa(@Query("email") String mail);
+//    @POST("user1/register")
+//    Observable<RegisterBean> register(@QueryMap Map<String,String> map);
+//    @POST("user1/login")
+//    Observable<LogainBean> logainBean(@QueryMap Map<String,String> map);
+
+
 }
